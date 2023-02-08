@@ -1,0 +1,25 @@
+.Species {
+  margin: 16px;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.16);
+          box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.16);
+}
+
+.Species img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin-bottom: 24px;
+}
+
+.Species p {
+  margin: 0 0 8px;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.Species p strong {
+  font-weight: 500;
+}
+/*# sourceMappingURL=Species.css.map */
