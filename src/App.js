@@ -20,6 +20,8 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [charactersWithImage, setCharactersWithImage] = useState(characters);
   const [sortedChars, setSortedChars] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const convertCmToInches = cm =>
@@ -41,8 +43,14 @@ function App() {
                 charactersFetched,
               ]);
               setLoading(false);
+              setIsError(false);
             });
         });
+      })
+      .catch(error => {
+        setIsError(true);
+        setErrorMessage(error.message);
+        setLoading(false);
       });
   }, []);
 
@@ -82,22 +90,30 @@ function App() {
   return (
     <div className="App">
       <h1>Empire Strikes Back - Species Listing</h1>
-      <div className="App-species">
-        {charactersWithImage && !loading && charactersWithImage.length > 4
-          ? sortedChars.map(character => (
-              <Species
-                key={character?.url}
-                name={character?.name}
-                classification={character?.classification}
-                designation={character?.designation}
-                height={character?.average_height}
-                numFilms={character?.films.length}
-                language={character?.language}
-                image={character?.image}
-              />
-            ))
-          : `Loading Species... ${charactersWithImage.length}/5`}
-      </div>
+      {!isError && (
+        <div className="App-species">
+          {charactersWithImage && !loading && charactersWithImage.length > 4
+            ? sortedChars.map(character => (
+                <Species
+                  key={character?.url}
+                  name={character?.name}
+                  classification={character?.classification}
+                  designation={character?.designation}
+                  height={character?.average_height}
+                  numFilms={character?.films.length}
+                  language={character?.language}
+                  image={character?.image}
+                />
+              ))
+            : `Loading Species... ${charactersWithImage.length}/5`}
+        </div>
+      )}
+      {isError && (
+        <div>
+          <h4>An error has occured, try again later</h4>
+          <p>Error: {errorMessage}</p>
+        </div>
+      )}
     </div>
   );
 }
